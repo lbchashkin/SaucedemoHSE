@@ -2,7 +2,10 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+
+import java.util.List;
 
 public class ProductsPage {
 
@@ -11,6 +14,7 @@ public class ProductsPage {
     String addToCartButton = "//div[text()='%s']/ancestor::div[@class = 'inventory_item']//button";
     By cartButton = By.id("shopping_cart_container");
     By sortMenu = By.xpath("//select[@class = 'product_sort_container']");
+    By productName = By.className("inventory_item_name");
     public ProductsPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -34,5 +38,9 @@ public class ProductsPage {
         Select select = new Select(driver.findElement(sortMenu));
         select.selectByVisibleText(sort);
         return this;
+    }
+
+    public List<String> getProductNamesList() {
+        return driver.findElements(productName).stream().map(WebElement::getText).toList();
     }
 }
